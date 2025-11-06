@@ -1,60 +1,27 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Rocket, Menu } from 'lucide-react';
+import React from 'react';
+import { Rocket, Sparkles } from 'lucide-react';
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const items = [
-    { href: '#projects', label: 'Projects' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#about', label: 'About' },
-    { href: '#contact', label: 'Contact' },
-  ];
-
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-all ${scrolled ? 'backdrop-blur-md bg-black/60 border-b border-white/10' : 'bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-2 text-white">
-          <Rocket className="w-5 h-5 text-cyan-400" />
-          <span className="font-semibold">Vibe Coder</span>
-        </a>
-
-        <nav className="hidden md:flex items-center gap-1">
-          {items.map((i) => (
-            <a key={i.href} href={i.href} className="px-3 py-2 rounded-md text-sm text-white/80 hover:text-white hover:bg-white/5 transition-colors">
-              {i.label}
-            </a>
-          ))}
-        </nav>
-
-        <button className="md:hidden p-2 rounded-md border border-white/10 text-white/80" onClick={() => setOpen((v) => !v)} aria-label="Toggle menu">
-          <Menu className="w-5 h-5" />
-        </button>
-      </div>
-
-      {open && (
-        <motion.nav
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          className="md:hidden border-t border-white/10 bg-black/70 backdrop-blur"
-        >
-          <div className="px-6 py-4 flex flex-col gap-2">
-            {items.map((i) => (
-              <a key={i.href} href={i.href} onClick={() => setOpen(false)} className="px-3 py-2 rounded-md text-sm text-white/80 hover:text-white hover:bg-white/5 transition-colors">
-                {i.label}
-              </a>
-            ))}
+    <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-black/40">
+      <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-cyan-500 to-fuchsia-600 grid place-items-center shadow-[0_0_20px_#06b6d4]">
+            <Rocket className="h-5 w-5 text-white" />
           </div>
-        </motion.nav>
-      )}
+          <span className="font-semibold tracking-wide">Vibe Coder</span>
+        </div>
+        <nav className="hidden md:flex items-center gap-6 text-sm text-white/80">
+          <a href="#projects" className="hover:text-white transition">Projects</a>
+          <a href="#about" className="hover:text-white transition">About</a>
+          <a href="#contact" className="hover:text-white transition">Contact</a>
+          <span className="inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-xs text-white/70">
+            <Sparkles className="h-3 w-3 text-cyan-400" />
+            cyberpunk x zen
+          </span>
+        </nav>
+      </div>
+      <div className="pointer-events-none h-px w-full bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
     </header>
   );
 }

@@ -1,34 +1,22 @@
-import { useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Projects from './components/Projects';
-import Skills from './components/Skills';
-import About from './components/About';
-import Contact from './components/Contact';
+import React, { useState } from 'react';
+import Navbar from './components/Navbar.jsx';
+import ProjectsConstellation from './components/ProjectsConstellation.jsx';
+import CaseStudyModal from './components/CaseStudyModal.jsx';
 
-function App() {
-  useEffect(() => {
-    document.documentElement.classList.add('bg-black');
-  }, []);
+export default function App() {
+  const [activeProject, setActiveProject] = useState(null);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white selection:bg-cyan-500/30 selection:text-white">
       <Navbar />
+
       <main>
-        <Hero />
-        <Projects />
-        <Skills />
-        <About />
-        <Contact />
+        <section className="relative">
+          <ProjectsConstellation onOpenProject={setActiveProject} />
+        </section>
       </main>
-      <footer className="border-t border-white/10 bg-black/60">
-        <div className="max-w-7xl mx-auto px-6 py-8 text-sm text-white/60 flex items-center justify-between">
-          <span>© {new Date().getFullYear()} Vibe Coder</span>
-          <span>Built with React • Three.js • Framer Motion</span>
-        </div>
-      </footer>
+
+      <CaseStudyModal project={activeProject} onClose={() => setActiveProject(null)} />
     </div>
   );
 }
-
-export default App;
